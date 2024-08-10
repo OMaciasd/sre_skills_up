@@ -1,0 +1,27 @@
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: metallb-psp
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  # Agrega otras restricciones necesarias según tus políticas de seguridad
+  # Ejemplo: requerir el uso de SELinux
+  seLinux:
+    rule: RunAsAny
+  # Ejemplo: permitir solo volúmenes vacíos y montados en solo lectura
+  volumes:
+  - '*'
+  allowedHostPaths:
+  - pathPrefix: "/opt"
+    readOnly: true
+  hostIPC: false
+  hostNetwork: false
+  hostPID: false
+  runAsUser:
+    rule: MustRunAsNonRoot
+  fsGroup:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  readOnlyRootFilesystem: false

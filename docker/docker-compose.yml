@@ -1,0 +1,23 @@
+services:
+  python-microservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: omaciasd/python-microservice:last
+    expose:
+      - "5000" # Solo expone el puerto en la red de Docker, no en el host
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_APP=myapp:create_app
+      - FLASK_ENV=production
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - python-microservice

@@ -1,0 +1,56 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  DOCKER_HUB_USER: "omaciasd"
+  buildConfiguration: "Release"
+
+stages:
+  - stage: build
+    displayName: "Build"
+    jobs:
+      - job: build
+        displayName: "Build job"
+        steps:
+          - task: Docker@2
+            displayName: "Build and push Docker image"
+            inputs:
+              containerRegistry: "$(DOCKER_HUB_USER)"
+              repository: "microservicio-python"
+              command: "buildAndPush"
+              Dockerfile: "**/Dockerfile"
+              tags: |
+                $(Build.BuildId)
+
+  - stage: test
+    displayName: "Test"
+    jobs:
+      - job: RunPythonTests
+        displayName: "Run Python tests"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: PythonScript@2
+            displayName: "Run tests"
+            inputs:
+              scriptSource: "filePath"
+              scriptPath: "path_to_your_test_script.py"
+
+  - stage: deploy
+    displayName: "Deploy"
+    jobs:
+      - job: deploy
+        displayName: "Deploy job"
+        steps:
+          - task: AzureKubernetesServiceDeployment@2
+            displayName: "Deploy to K8s"
+            inputs:
+              kubernetesServiceConnection: "your-k8s-connection"
+              namespace: "tech.prod"
+              deploymentName: "python-microservice"
+              containerRegistry: "your-container-registry"

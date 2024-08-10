@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cilium
+  template:
+    metadata:
+      labels:
+        app: cilium
+    spec:
+      containers:
+      - name: cilium
+        image: quay.io/cilium/cilium:v1.16.0
+        # agrega configuración adicional aquí
