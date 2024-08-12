@@ -1,43 +1,24 @@
-# Archivos de sistema
-.DS_Store
-Thumbs.db
-
-# Directorios de entornos virtuales
-venv/
-env/
-.virtualenv/
-
-# Archivos de configuración de entorno
 .e*
-
-# Archivos de logs
-logs/
-*.l*
-
-# Archivos de compilación
-build/
-dist/
-*.pyc
-*.pyo
-*.pyd
-*y*/
-*/mye*/
-mye*/
-*/*nt*.*
-
-# Configuración de IDE
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-node_modules/
-bin/
-obj/
-certificates/
-*.j*
-*.bkp
-.*/
-*/.p*
+*.b*
+*.d*
 *.i*
+*.l*
+*.j*
+*.*u*
+*.*y*
+
+*m*/
+*d*/
+*e*/
+*l*/
+*o*/
+*y*/
 */*.i*
+*/*.*y*
+*/_*/
+*/*m*/
+*/*n*.*
+*/*/_*/
+
+!*g*/
+!*/*w*/
