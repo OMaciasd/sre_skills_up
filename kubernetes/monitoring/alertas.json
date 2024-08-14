@@ -1,0 +1,29 @@
+{
+  "alert": {
+    "name": "High CPU Usage",
+    "conditions": [
+      {
+        "evaluator": {
+          "type": "gt",
+          "params": [80]
+        },
+        "operator": "and",
+        "query": {
+          "params": ["A"]
+        },
+        "reducer": {
+          "type": "avg"
+        },
+        "type": "query"
+      }
+    ],
+    "frequency": "1m",
+    "handler": 1,
+    "noDataState": "no_data",
+    "notifications": [
+      {
+        "uid": "your-notification-channel-uid"
+      }
+    ]
+  }
+}

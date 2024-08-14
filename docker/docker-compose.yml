@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     image: omaciasd/python-microservice:last
     expose:
-      - "5000" # Solo expone el puerto en la red de Docker, no en el host
+      - "5000"
     volumes:
       - .:/app
     environment:

@@ -1,0 +1,28 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "example",
+    "title": "Example Dashboard",
+    "tags": [],
+    "timezone": "utc",
+    "schemaVersion": 16,
+    "version": 1,
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Example Graph",
+        "targets": [
+          {
+            "target": "example_metric",
+            "refId": "A"
+          }
+        ],
+        "datasource": {
+          "type": "prometheus",
+          "uid": "your-prometheus-uid"
+        }
+      }
+    ]
+  },
+  "overwrite": false
+}
