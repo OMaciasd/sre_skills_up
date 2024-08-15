@@ -11,7 +11,7 @@ services:
     environment:
       - FLASK_APP=webapp:create_app
       - FLASK_ENV=production
-      - DATABASE_URL=postgresql://your_postgres_user:your_postgres_password@postgres:5432/your_postgres_db
+      - DATABASE_URL=postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DB
     restart: always
     depends_on:
       - prometheus
@@ -31,7 +31,7 @@ services:
       - docker_default
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus
     container_name: prometheus
     ports:
       - "9090:9090"
@@ -40,11 +40,10 @@ services:
       - prometheus-data:/prometheus
     networks:
       - docker_default
+    env_file:
+      - ./.env
 
   grafana:
-    # build:
-    #   context: .
-    #   dockerfile: Grafana/Dockerfile
     image: grafana/grafana:latest
     container_name: grafana
     ports:
@@ -52,11 +51,11 @@ services:
     environment:
       - GF_METRICS_ENABLED=true
       - GF_METRICS_BASIC_AUTH_USERNAME=grafana
-      - GF_METRICS_BASIC_AUTH_PASSWORD=grafana
+      - GF_METRICS_BASIC_AUTH_PASSWORD=$GRAFANA_METRICS_PASSWORD
       - GF_PROMETHEUS_ENDPOINT_ENABLED=true
       - GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_USERNAME=grafana
-      - GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_PASSWORD=grafana
-      - GF_SECURITY_ADMIN_PASSWORD=your_secure_password
+      - GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_PASSWORD=$GRAFANA_PROMETHEUS_PASSWORD
+      - GF_SECURITY_ADMIN_PASSWORD=$GRAFANA_ADMIN_PASSWORD
     volumes:
       - grafana-data:/var/lib/grafana
       - ./grafana-provisioning:/etc/grafana/provisioning
@@ -67,9 +66,9 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_USER: your_postgres_user
-      POSTGRES_PASSWORD: your_postgres_password
-      POSTGRES_DB: your_postgres_db
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
