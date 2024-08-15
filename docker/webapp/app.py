@@ -1,5 +1,15 @@
-from flask import Flask, Response, request
 from prometheus_client import Summary, generate_latest, REGISTRY
+from flask import Flask, Response, request
+import logging_config
+
+import logging
+
+logging_config.setup_logging()
+
+logging.basicConfig(level=logging.INFO)
+
+logging.info('This is an informational message')
+
 
 REQUEST_TIME = Summary(
     'request_processing_seconds',

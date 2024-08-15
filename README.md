@@ -10,7 +10,19 @@ git clone --recursive --depth=1 https://github.com/OMaciasd/sre_skills_up.git; c
 
 ## Publish the App Docker Images
 
-### Build the docker project
+### First: Setting enviroments
+
+``` .env
+GRAFANA_METRICS_PASSWORD=your_grafana_metrics_password
+GRAFANA_PROMETHEUS_PASSWORD=your_grafana_prometheus_password
+GRAFANA_ADMIN_PASSWORD=your_grafana_admin_password
+POSTGRES_USER=your_postgres_user
+POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_DB=your_postgres_db
+grafana_PASSWORD=grafana
+```
+
+### Second: Build the docker project
 
 ``` go
 docker-compose up -d --scale python-microservice=3

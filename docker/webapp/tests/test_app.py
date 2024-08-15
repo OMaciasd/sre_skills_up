@@ -1,11 +1,11 @@
-from web.app import create_app
+from webapp.app import create_app
 import pytest
 import sys
 import os
 base_dir = os.path.dirname(__file__)
-webapp_path = os.path.join(base_dir, '..', 'webapp')
-abs_webapp_path = os.path.abspath(webapp_path)
-sys.path.insert(0, abs_webapp_path)
+project_root = os.path.abspath(os.path.join(base_dir, '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 
 @pytest.fixture

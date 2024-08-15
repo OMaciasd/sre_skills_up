@@ -8,11 +8,9 @@ app.config.from_object('config.Config')
 db.init_app(app)
 
 
-# Registrando el blueprint del controlador de usuarios
 app.register_blueprint(user_controller)
 
 
-# Ruta para renderizar el template index.html
 @app.route('/')
 def index():
     return render_template('index.html')
