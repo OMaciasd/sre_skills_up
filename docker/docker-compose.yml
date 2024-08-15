@@ -4,14 +4,20 @@ services:
       context: .
       dockerfile: Dockerfile
     image: omaciasd/python-microservice:last
-    expose:
-      - "5000"
+    ports:
+      - "5000:5000"
     volumes:
-      - .:/app
+      - ./webapp:/app/webapp
     environment:
-      - FLASK_APP=myapp:create_app
+      - FLASK_APP=webapp:create_app
       - FLASK_ENV=production
+      - DATABASE_URL=postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DB
     restart: always
+    depends_on:
+      - prometheus
+      - postgres
+    networks:
+      - docker_default
 
   nginx:
     image: nginx:latest
@@ -21,3 +27,58 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - python-microservice
+    networks:
+      - docker_default
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - docker_default
+    env_file:
+      - ./.env
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_METRICS_ENABLED=true
+      - GF_METRICS_BASIC_AUTH_USERNAME=grafana
+      - GF_METRICS_BASIC_AUTH_PASSWORD=$GRAFANA_METRICS_PASSWORD
+      - GF_PROMETHEUS_ENDPOINT_ENABLED=true
+      - GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_USERNAME=grafana
+      - GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_PASSWORD=$GRAFANA_PROMETHEUS_PASSWORD
+      - GF_SECURITY_ADMIN_PASSWORD=$GRAFANA_ADMIN_PASSWORD
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana-provisioning:/etc/grafana/provisioning
+      - ./Grafana/prometheus-datasource.json:/etc/grafana/provisioning/datasources/prometheus-datasource.yaml
+    networks:
+      - docker_default
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - docker_default
+
+volumes:
+  prometheus-data:
+  grafana-data:
+  postgres-data:
+
+networks:
+  docker_default:
+    driver: bridge
