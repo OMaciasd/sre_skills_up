@@ -1,6 +1,7 @@
 from prometheus_client import Summary, generate_latest, REGISTRY
 from flask import Flask, Response, request
 import logging_config
+import time  # Importa el módulo time
 
 import logging
 
@@ -9,7 +10,6 @@ logging_config.setup_logging()
 logging.basicConfig(level=logging.INFO)
 
 logging.info('This is an informational message')
-
 
 REQUEST_TIME = Summary(
     'request_processing_seconds',
@@ -34,11 +34,13 @@ def create_app():
 
     @app.before_request
     def before_request():
-        request.start_time = REQUEST_TIME.time()
+        request.start_time = time.time()  # Start the timer
 
     @app.after_request
     def after_request(response):
-        request.start_time.observe()
+        # Calculate the duration of the request
+        request_duration = time.time() - request.start_time
+        REQUEST_TIME.observe(request_duration)  # Record the time
         return response
 
     return app

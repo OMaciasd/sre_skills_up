@@ -1,11 +1,5 @@
 from webapp.app import create_app
 import pytest
-import sys
-import os
-base_dir = os.path.dirname(__file__)
-project_root = os.path.abspath(os.path.join(base_dir, '..'))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
 
 
 @pytest.fixture
@@ -16,8 +10,15 @@ def client():
         yield client
 
 
-def test_app_route(client):
-    """Verifica que la ruta /app responde con el texto esperado."""
-    response = client.get('/app')
+def test_hello_route(client):
+    """Verifica que la ruta / responde con el texto esperado."""
+    response = client.get('/')
     assert response.status_code == 200
-    assert b'This is the app route!' in response.data
+    assert b'Hello World!' in response.data
+
+
+def test_metrics_route(client):
+    """Verifica que la ruta /metrics responde con datos de métricas."""
+    response = client.get('/metrics')
+    assert response.status_code == 200
+    assert b'request_processing_seconds' in response.data

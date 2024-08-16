@@ -10,7 +10,10 @@ def create_app():
         'Time spent processing request'
     )
 
-    HTTP_REQUESTS_TOTAL = Counter('http_requests_total', 'Total number of HTTP requests')
+    HTTP_REQUESTS_TOTAL = Counter(
+        'http_requests_total',
+        'Total number of HTTP requests'
+        )
 
     @app.route('/')
     @REQUEST_TIME.time()
