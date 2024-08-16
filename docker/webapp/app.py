@@ -1,21 +1,16 @@
+from loguru import logger
 from prometheus_client import Summary, generate_latest, REGISTRY
 from flask import Flask, Response, request
 import logging_config
-import time  # Importa el módulo time
+import time
 
-import logging
-
+# Configura el logger
 logging_config.setup_logging()
-
-logging.basicConfig(level=logging.INFO)
-
-logging.info('This is an informational message')
 
 REQUEST_TIME = Summary(
     'request_processing_seconds',
     'Time spent processing request'
 )
-
 
 def create_app():
     app = Flask(__name__)
@@ -44,7 +39,6 @@ def create_app():
         return response
 
     return app
-
 
 if __name__ == '__main__':
     app = create_app()
