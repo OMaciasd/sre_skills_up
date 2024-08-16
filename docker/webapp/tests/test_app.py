@@ -1,5 +1,8 @@
-from webapp.app import create_app
 import pytest
+from web.app import create_app
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 @pytest.fixture
