@@ -49,19 +49,45 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_METRICS_ENABLED=true
-      - GF_METRICS_BASIC_AUTH_USERNAME=grafana
-      - GF_METRICS_BASIC_AUTH_PASSWORD=$GRAFANA_METRICS_PASSWORD
-      - GF_PROMETHEUS_ENDPOINT_ENABLED=true
-      - GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_USERNAME=grafana
-      - GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_PASSWORD=$GRAFANA_PROMETHEUS_PASSWORD
-      - GF_SECURITY_ADMIN_PASSWORD=$GRAFANA_ADMIN_PASSWORD
+      GF_METRICS_ENABLED: "true"
+      GF_METRICS_BASIC_AUTH_USERNAME: grafana
+      GF_METRICS_BASIC_AUTH_PASSWORD: ${GRAFANA_METRICS_PASSWORD}
+      GF_PROMETHEUS_ENDPOINT_ENABLED: "true"
+      GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_USERNAME: grafana
+      GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_PASSWORD: ${GRAFANA_PROMETHEUS_PASSWORD}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SERVER_ROOT_URL: http://localhost:3000
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
     volumes:
       - grafana-data:/var/lib/grafana
       - ./grafana-provisioning:/etc/grafana/provisioning
       - ./Grafana/prometheus-datasource.json:/etc/grafana/provisioning/datasources/prometheus-datasource.yaml
     networks:
       - docker_default
+    depends_on:
+      - prometheus
 
   postgres:
     image: postgres:latest
@@ -74,10 +100,45 @@ services:
     networks:
       - docker_default
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+      - "9410:9410"
+    environment:
+      - STORAGE_TYPE=mem
+      - METRICS_EXPORTER=prometheus
+    networks:
+      - docker_default
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./Loki/loki-config.yaml:/etc/loki/loki-config.yaml
+    command: ["-config.file=/etc/loki/local-config.yaml"]
+    networks:
+      - docker_default
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - /var/log:/var/log
+      - ./promtail/config:promtail-config.yaml:/etc/promtail/promtail-config.yaml
+    command: ["-config.file=/etc/promtail/promtail-config.yaml"]
+    networks:
+      - docker_default
+
 volumes:
   prometheus-data:
   grafana-data:
+    driver: local
   postgres-data:
+  loki-data:
 
 networks:
   docker_default:

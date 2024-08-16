@@ -1,6 +1,11 @@
 from flask import Blueprint, request, jsonify
 from users.models.user_model import Users
-from users.models.db import db
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+engine = create_engine('sqlite:///example.db')  # Use your database URL
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 user_controller = Blueprint('user_controller', __name__)
@@ -40,18 +45,20 @@ def get_user(user_id):
 def create_user():
     print("creando usuario")
     data = request.json
+
     new_user = Users(
         name=data['name'],
         email=data['email'],
         username=data['username'],
         password=data['password']
     )
-    db.session.add(new_user)
-    db.session.commit()
+
+    session.add(new_user)
+    session.commit()
+
     return jsonify({'message': 'User created successfully'}), 201
 
 
-# Update an existing user
 @user_controller.route('/api/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     print("actualizando usuario")
@@ -61,14 +68,15 @@ def update_user(user_id):
     user.email = data['email']
     user.username = data['username']
     user.password = data['password']
-    db.session.commit()
     return jsonify({'message': 'User updated successfully'})
 
 
-# Delete an existing user
 @user_controller.route('/api/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = Users.query.get_or_404(user_id)
-    db.session.delete(user)
-    db.session.commit()
+    return jsonify({
+        'id': user.id,
+        'name': user.name,
+        'email': user.email
+    })
     return jsonify({'message': 'User deleted successfully'})
