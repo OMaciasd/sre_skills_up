@@ -15,12 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -29,17 +29,26 @@ jobs:
           mv /home/runner/work/sre_skills_up/sre_skills_up/* /home/runner/work/sre_skills_up/
           cd /home/runner/work/sre_skills_up/docker/webapp
           if [ -f requirements.txt ]; then pip install -r requirements.txt && cat requirements.txt; fi
-      
+
       - name: Set PYTHONPATH
         run: |
-          echo "PYTHONPATH=$PYTHONPATH:/home/runner/work/sre_skills_up/docker/webapp" >> $GITHUB_ENV
-      
+          echo "PYTHONPATH=/home/runner/work/sre_skills_up" >> $GITHUB_ENV
+
       - name: Lint with flake8
         run: |
+          # Ejecutar flake8 para detectar errores y advertencias en el código
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      
+
+      - name: Debugging
+        run: |
+          # Verificar la configuración del PYTHONPATH y la estructura de directorios
+          echo $PYTHONPATH
+          ls -la /home/runner/work/sre_skills_up
+          ls -la /home/runner/work/sre_skills_up/docker/webapp
+
       - name: Test with pytest
         run: |
+          # Ejecutar pytest en el directorio de pruebas
           cd /home/runner/work/sre_skills_up/docker/webapp
           pytest tests
