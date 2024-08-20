@@ -2,7 +2,8 @@ from loguru import logger
 
 
 def setup_logging():
-    # Configuración del logger aquí
+    logger.add("./archivo.log", rotation="500 MB")
+
     logger.debug("Este es un mensaje de depuración")
     logger.info("Este es un mensaje informativo")
     logger.warning("Este es un mensaje de advertencia")
@@ -12,5 +13,4 @@ def setup_logging():
     logger.bind(usuario="Usuario1").info(
         "Este es un mensaje informativo con una etiqueta de usuario"
     )
-    logger.add("archivo.log", rotation="500 MB")
     logger.info("Esto se guardará en el archivo")

@@ -13,11 +13,9 @@ git clone --recursive --depth=1 https://github.com/OMaciasd/sre_skills_up.git; c
 ### First: Setting .env
 
 ``` .env
-GRAFANA_METRICS_PASSWORD=your_grafana_metrics_password
-GRAFANA_PROMETHEUS_PASSWORD=your_grafana_prometheus_password
-GRAFANA_ADMIN_PASSWORD=your_grafana_admin_password
-POSTGRES_PASSWORD=your_postgres_password
 grafana_PASSWORD=grafana
+POSTGRES_PASSWORD=your_postgres_password
+GRAFANA_ADMIN_PASSWORD=your_grafana_admin_password
 ```
 
 ### Second: Build the docker project

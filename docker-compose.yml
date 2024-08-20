@@ -1,0 +1,171 @@
+---
+volumes:
+  loki-data:
+  nagios_data:
+  nagios_config:
+  postgres-data:
+  influxdb-data:
+  prometheus-data:
+  sre_skills_up_grafana-data:
+    driver: local
+  sre_skills_up_grafana_logs:
+
+networks:
+  docker_default:
+    driver: bridge
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - python
+    networks:
+      - docker_default
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_LOG_MODE: file
+      GF_METRICS_ENABLED: "true"
+      GF_LOG_DIR: /var/log/grafana
+      GF_SECURITY_ADMIN_USER: admin
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_PROMETHEUS_ENDPOINT_ENABLED: "true"
+      GF_METRICS_BASIC_AUTH_USERNAME: grafana
+      GF_SERVER_ROOT_URL: http://localhost:3000
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_USERNAME: grafana
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_METRICS_BASIC_AUTH_PASSWORD: GRAFANA_METRICS_PASSWORD
+      GF_PROMETHEUS_ENDPOINT_BASIC_AUTH_PASSWORD: GRAFANA_PROMETHEUS_PASSWORD
+    volumes:
+      - sre_skills_up_grafana-data:/var/lib/grafana
+      - sre_skills_up_grafana_logs:/var/log/grafana
+      - ./Grafana/grafana-provisioning/datasources/datasources.yml:/etc/grafana/provisioning/datasources/prometheus-datasource.yaml
+    networks:
+      - docker_default
+    depends_on:
+      - loki
+      - influxdb
+      - prometheus
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./Loki/loki-config.yaml:/etc/loki/loki-config.yaml
+    command: ["-config.file=/etc/loki/loki-config.yaml"]
+    networks:
+      - docker_default
+
+  python:
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+    container_name: python
+    volumes:
+      - ./webapp:/app
+    environment:
+      FLASK_APP: ./web/app.py
+      FLASK_ENV: production
+      DATABASE_URL: postgresql://POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/POSTGRES_DB
+      PYTHONPATH: /app/web
+    restart: always
+    depends_on:
+      - prometheus
+      - postgres
+    networks:
+      - docker_default
+    command: flask run --host=0.0.0.0
+    ports:
+      - "5000:5000"
+
+  nagios:
+    image: jasonrivers/nagios:latest
+    container_name: nagios
+    ports:
+      - "8081:80"
+    environment:
+      - NAGIOS_ADMIN_PASSWORD=your_admin_password
+    volumes:
+      - nagios_data:/usr/local/nagios/var
+      - nagios_config:/usr/local/nagios/etc
+    restart: unless-stopped
+    networks:
+      - docker_default
+
+  promtail:
+    build:
+      context: .
+      dockerfile: ./Promtail/Dockerfile
+    container_name: promtail
+    volumes:
+      - ./Promtail/config:/etc/promtail
+      - ./webapp/archivo.log:/var/log/archivo.log
+    networks:
+      - docker_default
+    depends_on:
+      - loki
+    command: ["-config.file=/etc/promtail/promtail-config.yaml"]
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - docker_default
+    env_file:
+      - ./.env
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: POSTGRES_USER
+      POSTGRES_PASSWORD: POSTGRES_PASSWORD
+      POSTGRES_DB: POSTGRES_DB
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - docker_default
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+      - "9410:9410"
+    environment:
+      - STORAGE_TYPE=mem
+      - METRICS_EXPORTER=prometheus
+    networks:
+      - docker_default
+
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=mydatabase
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=adminpassword
+    networks:
+      - docker_default
