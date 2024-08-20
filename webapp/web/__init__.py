@@ -1,5 +1,10 @@
 from flask import Flask, Response
-from prometheus_client import Summary, Counter, generate_latest, REGISTRY
+from prometheus_client import (
+    Summary,
+    Counter,
+    generate_latest,
+    REGISTRY,
+)
 
 
 def create_app():
@@ -13,7 +18,7 @@ def create_app():
     HTTP_REQUESTS_TOTAL = Counter(
         'http_requests_total',
         'Total number of HTTP requests'
-        )
+    )
 
     @app.route('/')
     @REQUEST_TIME.time()
@@ -33,3 +38,8 @@ def create_app():
             return Response(f"Error generating metrics: {e}", status=500)
 
     return app
+
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(host='0.0.0.0', port=5000)

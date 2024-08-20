@@ -1,0 +1,7 @@
+2024-08-20 02:51:11.672 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-20 02:51:11.672 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-20 02:51:11.672 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-20 02:51:11.672 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-20 02:51:11.672 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-20 02:51:11.672 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-20 02:51:11.674 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo

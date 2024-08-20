@@ -1,8 +1,9 @@
-import logging_config
+import logging_config as logging_config
 
-from docker.webapp.web.app import create_app
+from web.app import create_app
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 logging_config.setup_logging()

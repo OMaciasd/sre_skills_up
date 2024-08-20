@@ -1,13 +1,17 @@
 from prometheus_client import Summary, generate_latest, REGISTRY
 from flask import Flask, Response, request
-import logging_config
-import time  # Importa el módulo time
+from web import logging_config
+import time
 
 import logging
 
 logging_config.setup_logging()
 
-logging.basicConfig(level=logging.INFO)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 logging.info('This is an informational message')
 
