@@ -13,8 +13,10 @@ git clone --recursive --depth=1 https://github.com/OMaciasd/sre_skills_up.git; c
 ### First: Setting .env
 
 ``` .env
+POSTGRES_USER=user
+POSTGRES_DB=appx_db
 grafana_PASSWORD=grafana
-POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_PASSWORD=postgres
 GRAFANA_ADMIN_PASSWORD=your_grafana_admin_password
 ```
 
