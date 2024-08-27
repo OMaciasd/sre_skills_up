@@ -33,3 +33,66 @@
 2024-08-22 06:38:07.027 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
 2024-08-22 06:38:07.027 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
 2024-08-22 06:38:07.028 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-25 09:37:00.246 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-25 09:37:00.248 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-25 09:37:00.249 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-25 09:37:00.250 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-25 09:37:00.251 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-25 09:37:00.252 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-25 09:37:00.253 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-25 09:50:19.253 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-25 09:50:19.254 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-25 09:50:19.255 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-25 09:50:19.256 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-25 09:50:19.257 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-25 09:50:19.258 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-25 09:50:19.259 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-26 06:10:47.584 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-26 06:10:47.586 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-26 06:10:47.586 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-26 06:10:47.588 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-26 06:10:47.588 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-26 06:10:47.589 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-26 06:10:47.590 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-26 06:12:17.355 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-26 06:12:17.364 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-26 06:12:17.365 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-26 06:12:17.366 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-26 06:12:17.368 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-26 06:12:17.370 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-26 06:12:17.372 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-26 06:14:44.569 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-26 06:14:44.577 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-26 06:14:44.578 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-26 06:14:44.579 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-26 06:14:44.580 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-26 06:14:44.581 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-26 06:14:44.583 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-26 06:19:16.784 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-26 06:19:16.788 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-26 06:19:16.790 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-26 06:19:16.791 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-26 06:19:16.792 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-26 06:19:16.793 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-26 06:19:16.794 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-26 06:55:35.078 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-26 06:55:35.084 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-26 06:55:35.086 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-26 06:55:35.091 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-26 06:55:35.093 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-26 06:55:35.095 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-26 06:55:35.097 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-26 07:06:54.905 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-26 07:06:54.909 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-26 07:06:54.910 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-26 07:06:54.910 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-26 07:06:54.912 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-26 07:06:54.913 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-26 07:06:54.913 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-26 11:00:54.779 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-26 11:00:54.784 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-26 11:00:54.785 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-26 11:00:54.786 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-26 11:00:54.788 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-26 11:00:54.788 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-26 11:00:54.789 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
