@@ -173,3 +173,13 @@ services:
       - INFLUXDB_ADMIN_PASSWORD=adminpassword
     networks:
       - docker_default
+
+  pumba:
+    container_name: pumba
+    volumes:
+      - ./scripts/Go/main.go:/scripts/main.go
+    networks:
+      - docker_default
+    build:
+      context: ./Pumba
+      dockerfile: Dockerfile
