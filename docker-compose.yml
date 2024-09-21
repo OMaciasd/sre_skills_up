@@ -122,9 +122,7 @@ services:
       - docker_default
 
   promtail:
-    build:
-      context: .
-      dockerfile: ./Promtail/Dockerfile
+    image: grafana/promtail:latest
     container_name: promtail
     volumes:
       - ./Promtail/config:/etc/promtail
@@ -173,13 +171,3 @@ services:
       - INFLUXDB_ADMIN_PASSWORD=adminpassword
     networks:
       - docker_default
-
-  pumba:
-    container_name: pumba
-    volumes:
-      - ./scripts/Go/main.go:/scripts/main.go
-    networks:
-      - docker_default
-    build:
-      context: ./Pumba
-      dockerfile: Dockerfile

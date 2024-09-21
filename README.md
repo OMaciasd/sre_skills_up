@@ -13,11 +13,12 @@ git clone --recursive --depth=1 https://github.com/OMaciasd/sre_skills_up.git; c
 ### First: Setting .env
 
 ``` .env
-POSTGRES_USER=user
+RABBITMQ_URL=amqp://myuser:mypassword@rabbitmq:5672/
 POSTGRES_DB=appx_db
 grafana_PASSWORD=grafana
 POSTGRES_PASSWORD=postgres
 GRAFANA_ADMIN_PASSWORD=your_grafana_admin_password
+
 ```
 
 ### Second: Build the docker project

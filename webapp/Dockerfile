@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.19
+ARG PYTHON_VERSION=3.20
 FROM python:alpine${PYTHON_VERSION} AS build
 LABEL Name="WebApp" \
       Version="1.0"
