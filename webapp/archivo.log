@@ -96,3 +96,10 @@
 2024-08-26 11:00:54.788 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
 2024-08-26 11:00:54.788 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
 2024-08-26 11:00:54.789 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
+2024-08-31 09:25:21.822 | DEBUG    | web.logging_config:setup_logging:7 - Este es un mensaje de depuración
+2024-08-31 09:25:21.824 | INFO     | web.logging_config:setup_logging:8 - Este es un mensaje informativo
+2024-08-31 09:25:21.825 | WARNING  | web.logging_config:setup_logging:9 - Este es un mensaje de advertencia
+2024-08-31 09:25:21.826 | ERROR    | web.logging_config:setup_logging:10 - Este es un mensaje de error
+2024-08-31 09:25:21.827 | CRITICAL | web.logging_config:setup_logging:11 - Este es un mensaje crítico
+2024-08-31 09:25:21.828 | INFO     | web.logging_config:setup_logging:13 - Este es un mensaje informativo con una etiqueta de usuario
+2024-08-31 09:25:21.829 | INFO     | web.logging_config:setup_logging:16 - Esto se guardará en el archivo
